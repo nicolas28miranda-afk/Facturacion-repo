@@ -55,6 +55,7 @@ public class SecurityConfig {
             "http://127.0.0.1:5174",
             "https://redcibercom.cloud",
             "http://redcibercom.cloud",
+            "http://18.225.182.179:8080",
             "http://18.222.139.153:8080",
             "http://18.116.201.152:8080"
         ));

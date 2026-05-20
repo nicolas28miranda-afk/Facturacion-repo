@@ -1,0 +1,36 @@
+{
+  "facturaData": {
+    "uuid": "TEST-LOCALLOGO-2025-10-23",
+    "serie": "TEST",
+    "folio": "001",
+    "fechaEmision": "2025-10-23T15:00:00Z",
+    "nombreEmisor": "Empresa Ejemplo",
+    "rfcEmisor": "EJE900101M8A",
+    "nombreReceptor": "Cliente Ejemplo",
+    "rfcReceptor": "XAXX010101000",
+    "subtotal": 1000.00,
+    "iva": 160.00,
+    "total": 1160.00,
+    "conceptos": [
+      {
+        "cantidad": "1",
+        "descripcion": "Producto de ejemplo",
+        "valorUnitario": "1000.00",
+        "importe": "1000.00",
+        "iva": "160.00",
+        "unidad": "PZA"
+      }
+    ],
+    "metodoPago": "PUE",
+    "formaPago": "01",
+    "usoCFDI": "G01"
+  },
+  "logoConfig": {
+    "logoBase64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg==",
+    "customColors": {
+      "primary": "#10b981",
+      "secondary": "#22d3ee",
+      "text": "#111827"
+    }
+  }
+}

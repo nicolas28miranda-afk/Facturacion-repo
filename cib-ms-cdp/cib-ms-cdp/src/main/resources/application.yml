@@ -1,0 +1,108 @@
+spring:
+  profiles:
+    active: oracle
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    date-format: yyyy-MM-dd'T'HH:mm:ss.SSS
+
+server:
+  port: 8081
+  servlet:
+    context-path: /cib-ms-cdp
+
+# URLs permitidas para CORS (frontend)
+cors:
+  allowed-origins:
+    - http://localhost:5173
+    - http://localhost:5174
+    # URLs de producción del frontend (ajustar según donde esté desplegado el frontend)
+    - http://174.136.25.157:5173
+    - http://174.136.25.157:5174
+    # Si el frontend está en otro puerto o dominio, agregarlo aquí
+
+---
+# Perfil de Oracle (producción)
+spring:
+  config:
+    activate:
+      on-profile: oracle
+  datasource:
+    url: jdbc:oracle:thin:@//174.136.25.157:1521/XE
+    username: CIBCDP
+    password: ${DB_PASSWORD:cibcdp}
+    driver-class-name: oracle.jdbc.OracleDriver
+  jpa:
+    properties:
+      hibernate.dialect: org.hibernate.dialect.OracleDialect
+    hibernate:
+      ddl-auto: none
+  show-sql: false
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    date-format: yyyy-MM-dd'T'HH:mm:ss.SSS
+
+# Configuración del servidor para producción
+server:
+  servlet:
+    context-path: /cib-ms-cdp
+
+# Logging
+logging:
+  level:
+    com.cibercom.cdp: INFO
+    org.springframework: INFO
+    org.springframework.boot: INFO
+    org.springframework.web: INFO
+    org.hibernate.SQL: WARN
+    org.hibernate.type.descriptor.sql.BasicBinder: WARN
+  file:
+    name: /opt/tomcat/logs/cib-ms-cdp.log
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+
+# Actuator configuration
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always
+
+---
+# Perfil de desarrollo (local)
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    url: jdbc:oracle:thin:@//localhost:1521/xepdb1
+    username: CIBCDP
+    password: cibcdp
+    driver-class-name: oracle.jdbc.OracleDriver
+  jpa:
+    properties:
+      hibernate.dialect: org.hibernate.dialect.Oracle12cDialect
+    hibernate:
+      ddl-auto: update
+  show-sql: true
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    date-format: yyyy-MM-dd'T'HH:mm:ss.SSS
+
+# Configuración del servidor para desarrollo
+server:
+  servlet:
+    context-path: /cib-ms-cdp
+
+# Logging
+logging:
+  level:
+    com.cibercom.cdp: DEBUG
+    org.springframework.web: INFO
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE

@@ -1,0 +1,11 @@
+# Microservicio cib-ms-cdp (PAC / clientes CFDI)
+FROM maven:3.9-eclipse-temurin-17 AS build
+WORKDIR /app
+COPY cib-ms-cdp/cib-ms-cdp/pom.xml ./
+COPY cib-ms-cdp/cib-ms-cdp/src ./src
+RUN mvn clean package -DskipTests
+
+FROM tomcat:10.1-jdk17-temurin
+RUN rm -rf /usr/local/tomcat/webapps/*
+COPY --from=build /app/target/cib-ms-cdp-*.war /usr/local/tomcat/webapps/cib-ms-cdp.war
+EXPOSE 8080

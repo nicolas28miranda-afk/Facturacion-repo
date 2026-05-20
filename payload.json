@@ -1,0 +1,19 @@
+{
+  "codigoFacturacion": "FAC-TEST-001",
+  "rfc": "XAXX010101000",
+  "razonSocial": "Cliente Demo",
+  "nombre": "Cliente",
+  "paterno": "Demo",
+  "materno": "Test",
+  "correoElectronico": "demo@example.com",
+  "pais": "MEX",
+  "domicilioFiscal": "CP 01000",
+  "regimenFiscal": "601",
+  "usoCfdi": "G03",
+  "tienda": "123",
+  "terminal": "5",
+  "boleta": "98765",
+  "medioPago": "PUE",
+  "formaPago": "03",
+  "iepsDesglosado": false
+}

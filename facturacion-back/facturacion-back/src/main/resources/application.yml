@@ -1,0 +1,316 @@
+# ============================================================================
+# CONFIGURACIÓN BASE - Valores comunes para todos los perfiles
+# Perfil activo por defecto: local,oracle (Oracle en tu PC / red).
+# Servidor (Oracle en Docker): --spring.profiles.active=dev,oracle
+# Producción (Oracle remoto): --spring.profiles.active=prod,oracle
+# ============================================================================
+spring:
+  profiles:
+    active: local,oracle
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    date-format: yyyy-MM-dd'T'HH:mm:ss.SSS
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: nm9282672@gmail.com
+    password: ryws tbcw wnvs zziq
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+          from: nm9282672@gmail.com
+  main:
+    headless: false
+
+# Configuración de logs para preview y escritura
+app:
+  logo:
+    # Ruta del logo (data URI). Vacío = busca config/logo-base64.txt en el módulo backend
+    storage-file: ${LOGO_STORAGE_FILE:facturacion-back/facturacion-back/config/logo-base64.txt}
+  logs:
+    # Base directory that contains readable log files for previewing.
+    # You can override with environment variable LOGS_BASE_DIR.
+    # Example (Linux): /var/log/myapp
+    # Example (Windows): C:/cibercom/logs
+    # Por defecto usa Linux, pero puede sobrescribirse con variable de entorno
+    base-dir: "${LOGS_BASE_DIR:/var/log/facturacion}"
+    # Allow clients to pass ?baseDir=... in requests (dev convenience)
+    allow-request-base: ${ALLOW_REQUEST_BASE:true}
+  tareas-operacion:
+    # Si se define (p. ej. vía TAREAS_OPERACION_ADMIN_SECRET), GET /todas, POST, POST /bulk y PATCH reasignar
+    # exigen la cabecera HTTP "X-Tareas-Operacion-Admin" con el mismo valor. Vacío = sin comprobación (desarrollo).
+    admin-secret: ${TAREAS_OPERACION_ADMIN_SECRET:}
+
+# Escribir logs del backend en la misma carpeta para que aparezcan en la UI
+logging:
+  file:
+    name: ${LOG_FILE:${app.logs.base-dir}/server.log}
+  logback:
+    rollingpolicy:
+      # Rota por fecha y tamaño: server.log.2025-10-23.0, .1, ...
+      file-name-pattern: ${app.logs.base-dir}/server.log.%d{yyyy-MM-dd}.%i
+      max-file-size: 10MB
+      max-history: 7
+      total-size-cap: 200MB
+
+# Configuración JWT
+jwt:
+  secret: cibercom-facturacion-secret-key-2024-super-secure
+  expiration: 180000 # 3 minutos en milisegundos
+
+# Configuración de seguridad
+security:
+  cors:
+    allowed-origins: http://localhost:5173
+    allowed-methods: GET,POST,PUT,DELETE,OPTIONS
+    allowed-headers: "*"
+    allow-credentials: true
+
+# Configuración del Emisor (valores por defecto para CFDI)
+facturacion:
+  emisor:
+    rfc: IVD920810GU2
+    nombre: INNOVACION VALOR Y DESARROLLO SA
+    regimen: 601
+    cp: 58000
+    registroPatronal: "VADA800927HSRSRL05" # Registro Patronal del IMSS (requerido para nóminas)
+  csd:
+    enabled: true
+    certificado:
+      path: classpath:certificados/CSD_Sucursal_1_IVD920810GU2_20230518_062554.cer
+    llave:
+      path: classpath:certificados/CSD_Sucursal_1_IVD920810GU2_20230518_062554.key
+      password: "12345678a"
+
+# Configuración de Finkok (PAC) - Demo por defecto
+finkok:
+  enabled: true
+  username: nm9282672@gmail.com
+  password: N1C0LASm_
+  stamp:
+    url: https://demo-facturacion.finkok.com/servicios/soap/stamp
+  cancel:
+    url: https://demo-facturacion.finkok.com/servicios/soap/cancel
+  retentions:
+    url: https://demo-facturacion.finkok.com/servicios/soap/retentions
+  # proxy:
+  #   enabled: false
+  #   host: proxy.example.com
+  #   port: 8080
+  connection:
+    connect-timeout: 15000
+    read-timeout: 30000
+    use-ipv4-only: true
+    follow-redirects: true
+  tunnel:
+    enabled: false
+    local-port: 8443
+
+# WhatsApp Cloud API (Meta). Puedes sobreescribir con WHATSAPP_ACCESS_TOKEN y WHATSAPP_PHONE_NUMBER_ID.
+# Los tokens de acceso temporal suelen caducar (~24 h); si falla el envío, genera uno nuevo en Meta.
+whatsapp:
+  access-token: ${WHATSAPP_ACCESS_TOKEN:EAAVo4XPGWwoBRV2RuCBsfQ3ZB0iXiBXsAYuP4ETnX2E0ZAhFCqBpDjVgIMQkBYD6v9EiEik8ZB8ZCU8RZA2Iox5ZAjUJZC50YCmzzAVcYDRpfX95wq2NUGceOZBf1YoR6Bs4LyLayCZBA5wjHw60mt7ApfazhoTHHELGg5of8r8eydNxKBrn8EoqPteTS9lbxCTXb3VDZAUEet1ZCgK4wz7XtzuLzofih30CSWbCGgbmGty051fqFJtxFJ1WE16n9BEcDZChkPHKv07TZCS5zZAzT8lfyE2oF7}
+  phone-number-id: ${WHATSAPP_PHONE_NUMBER_ID:1176210435564704}
+  graph-api-version: ${WHATSAPP_GRAPH_VERSION:v25.0}
+  # true = primero plantilla (hello_world o la de pre-envio-template-name): suele ser necesario en sandbox para que lleguen texto + PDF.
+  # false = solo texto + PDF (sin hello_world). Meta solo lo permite si el cliente escribió antes al número o la ventana de 24 h está abierta.
+  pre-envio-template-enabled: false
+  pre-envio-template-name: hello_world
+  pre-envio-template-language: en_US
+  # Prueba con true si no recibes nada y tu número en WhatsApp es móvil MX (521…); la lista de prueba de Meta debe incluir el mismo formato.
+  mexico-insert-one-after-52: false
+
+# ============================================================================
+# PERFIL: LOCAL (local) - Tu PC; Oracle en servidor 72 (Docker).
+# Si Oracle estuviera en tu PC: jdbc:oracle:thin:@//localhost:1521/XEPDB1
+# ============================================================================
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    url: jdbc:oracle:thin:@//72.62.128.98:1521/XEPDB1
+    username: nick
+    password: password123
+    driver-class-name: oracle.jdbc.OracleDriver
+    hikari:
+      connection-timeout: 30000
+      maximum-pool-size: 10
+      minimum-idle: 2
+      max-lifetime: 1800000
+      idle-timeout: 600000
+      validation-timeout: 5000
+      leak-detection-threshold: 60000
+      initialization-fail-timeout: -1
+      connection-test-query: SELECT 1 FROM DUAL
+      keepalive-time: 300000
+  jpa:
+    properties:
+      hibernate.dialect: org.hibernate.dialect.OracleDialect
+      hibernate.temp.use_jdbc_metadata_defaults: false
+    hibernate:
+      ddl-auto: none
+    open-in-view: false
+  show-sql: true
+
+server:
+  port: 8080
+  base-url: http://localhost:8080
+
+cors:
+  allowed-origins: http://localhost:5173,http://localhost:5174,http://127.0.0.1:5173,http://127.0.0.1:5174
+
+finkok:
+  enabled: true
+  username: nm9282672@gmail.com
+  password: N1C0LASm_
+  stamp:
+    url: https://demo-facturacion.finkok.com/servicios/soap/stamp
+  cancel:
+    url: https://demo-facturacion.finkok.com/servicios/soap/cancel
+  retentions:
+    url: https://demo-facturacion.finkok.com/servicios/soap/retentions
+
+# ============================================================================
+# PERFIL: DEV (dev) - Oracle en Docker en el servidor (Tomcat / entorno servidor)
+# ============================================================================
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    url: jdbc:oracle:thin:@//localhost:1521/XEPDB1
+    username: nick
+    password: password123
+    driver-class-name: oracle.jdbc.OracleDriver
+    hikari:
+      connection-timeout: 30000
+      maximum-pool-size: 10
+      minimum-idle: 2
+      max-lifetime: 1800000
+      idle-timeout: 600000
+      validation-timeout: 5000
+      leak-detection-threshold: 60000
+      initialization-fail-timeout: -1
+      connection-test-query: SELECT 1 FROM DUAL
+      keepalive-time: 300000
+  jpa:
+    properties:
+      hibernate.dialect: org.hibernate.dialect.OracleDialect
+      hibernate.temp.use_jdbc_metadata_defaults: false
+    hibernate:
+      ddl-auto: none
+    open-in-view: false
+  show-sql: true
+
+server:
+  port: 8080
+  base-url: http://localhost:8080
+
+cors:
+  allowed-origins: http://localhost:5173,http://localhost:5174,http://127.0.0.1:5173,http://127.0.0.1:5174
+
+finkok:
+  enabled: true
+  username: nm9282672@gmail.com
+  password: N1C0LASm_
+  stamp:
+    url: https://demo-facturacion.finkok.com/servicios/soap/stamp
+  cancel:
+    url: https://demo-facturacion.finkok.com/servicios/soap/cancel
+  retentions:
+    url: https://demo-facturacion.finkok.com/servicios/soap/retentions
+
+# ============================================================================
+# PERFIL: PRODUCCIÓN (prod)
+# ============================================================================
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    url: jdbc:oracle:thin:@//174.136.25.157:1521/XE
+    username: nick
+    password: N1C0LASm
+    driver-class-name: oracle.jdbc.OracleDriver
+    hikari:
+      connection-timeout: 30000
+      maximum-pool-size: 10
+      minimum-idle: 2
+      max-lifetime: 1800000
+      idle-timeout: 600000
+      validation-timeout: 5000
+      leak-detection-threshold: 60000
+      connection-test-query: SELECT 1 FROM DUAL
+      keepalive-time: 300000
+  jpa:
+    properties:
+      hibernate.dialect: org.hibernate.dialect.OracleDialect
+    hibernate:
+      ddl-auto: none
+  show-sql: false
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    date-format: yyyy-MM-dd'T'HH:mm:ss.SSS
+
+server:
+  port: 8080
+  servlet:
+    context-path: /facturacion-backend
+  base-url: http://72.62.128.98:8080
+
+cors:
+  allowed-origins: http://72.62.128.98:8080,http://localhost:8080,http://localhost:5173,http://localhost:5174
+
+finkok:
+  enabled: true
+  username: nm9282672@gmail.com
+  password: N1C0LASm_
+  stamp:
+    url: https://demo-facturacion.finkok.com/servicios/soap/stamp
+  cancel:
+    url: https://demo-facturacion.finkok.com/servicios/soap/cancel
+  retentions:
+    url: https://demo-facturacion.finkok.com/servicios/soap/retentions
+  connection:
+    connect-timeout: 60000
+    read-timeout: 180000
+    use-ipv4-only: true
+    follow-redirects: true
+
+# ============================================================================
+# PERFIL: ORACLE (oracle) - Marca uso de Oracle; datasource lo aporta local/dev/prod
+# ============================================================================
+---
+spring:
+  config:
+    activate:
+      on-profile: oracle
+
+# ============================================================================
+# PERFIL: MONGO (mongo) - MongoDB opcional
+# ============================================================================
+---
+spring:
+  config:
+    activate:
+      on-profile: mongo
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/facturacion_mongo
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    date-format: yyyy-MM-dd'T'HH:mm:ss.SSS

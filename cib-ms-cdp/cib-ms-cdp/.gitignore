@@ -1,0 +1,259 @@
+# =====================================================
+# GITIGNORE PARA MICROSERVICIO CDP
+# (Cliente Data Processing)
+# =====================================================
+
+# =====================================================
+# 1. ARCHIVOS DE COMPILACIÓN JAVA
+# =====================================================
+
+# Archivos compilados de Java
+*.class
+
+# Archivos de compilación de Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# =====================================================
+# 2. ARCHIVOS DE IDE
+# =====================================================
+
+# IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+# Eclipse
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+# VS Code
+.vscode/
+
+# =====================================================
+# 3. ARCHIVOS DE SISTEMA OPERATIVO
+# =====================================================
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.tmp
+*.temp
+*.log
+*.swp
+*.swo
+*~
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# =====================================================
+# 4. ARCHIVOS DE LOGS
+# =====================================================
+
+# Logs de aplicación
+*.log
+logs/
+log/
+
+# Logs de Spring Boot
+spring.log
+application.log
+
+# =====================================================
+# 5. ARCHIVOS DE BASE DE DATOS
+# =====================================================
+
+# Archivos de base de datos locales
+*.db
+*.sqlite
+*.sqlite3
+*.h2.db
+*.sql
+
+# Archivos de respaldo de base de datos
+*.bak
+*.backup
+*.dump
+
+# =====================================================
+# 6. ARCHIVOS DE CONFIGURACIÓN SENSIBLE
+# =====================================================
+
+# Archivos de configuración con credenciales
+application-local.yml
+application-dev.yml
+application-prod.yml
+application-secret.yml
+
+# Archivos de propiedades con credenciales
+application-local.properties
+application-dev.properties
+application-prod.properties
+application-secret.properties
+
+# Archivos de configuración de base de datos
+database.properties
+db.properties
+
+# =====================================================
+# 7. ARCHIVOS DE CERTIFICADOS Y LLAVES
+# =====================================================
+
+# Certificados SSL/TLS
+*.p12
+*.jks
+*.keystore
+*.truststore
+
+# Llaves privadas
+*.key
+*.pem
+*.crt
+*.cer
+
+# =====================================================
+# 8. ARCHIVOS DE DEPENDENCIAS
+# =====================================================
+
+# Node.js (si se usa para frontend)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# =====================================================
+# 9. ARCHIVOS DE DOCUMENTACIÓN GENERADA
+# =====================================================
+
+# Documentación generada
+docs/generated/
+javadoc/
+site/
+
+# =====================================================
+# 10. ARCHIVOS DE TESTING
+# =====================================================
+
+# Reportes de testing
+test-results/
+test-reports/
+coverage/
+jacoco.exec
+
+# =====================================================
+# 11. ARCHIVOS DE DEPLOYMENT
+# =====================================================
+
+# Archivos de deployment
+*.war
+*.ear
+*.jar
+!target/*.jar
+
+# Archivos de Docker
+Dockerfile.local
+docker-compose.override.yml
+
+# =====================================================
+# 12. ARCHIVOS ESPECÍFICOS DEL PROYECTO
+# =====================================================
+
+# Archivos de configuración local
+.env
+.env.local
+.env.development
+.env.production
+
+# Archivos de configuración de IDE específicos
+*.iml
+*.ipr
+*.iws
+
+# Archivos de configuración de Maven específicos
+.mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/maven-wrapper.properties
+
+# =====================================================
+# 13. ARCHIVOS DE BACKUP
+# =====================================================
+
+# Archivos de backup
+*.bak
+*.backup
+*.old
+*.orig
+
+# =====================================================
+# 14. ARCHIVOS TEMPORALES
+# =====================================================
+
+# Archivos temporales
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# =====================================================
+# 15. ARCHIVOS DE CONFIGURACIÓN DE BASE DE DATOS
+# =====================================================
+
+# Scripts de base de datos con credenciales
+database/credentials.sql
+database/passwords.sql
+database/secrets.sql
+
+# =====================================================
+# NOTAS IMPORTANTES
+# =====================================================
+# - Este .gitignore está diseñado específicamente para el microservicio CDP
+# - Incluye exclusiones para archivos sensibles como credenciales y certificados
+# - Mantiene la estructura del proyecto pero excluye archivos innecesarios
+# - Compatible con Maven, Spring Boot y Oracle Database
+# =====================================================

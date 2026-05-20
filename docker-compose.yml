@@ -1,0 +1,40 @@
+# Facturación + cib-ms-cdp (CDP). Un solo puerto 8080 hacia afuera.
+services:
+  facturacion:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: facturacion
+    expose:
+      - "8080"
+    env_file:
+      - .env
+    restart: unless-stopped
+
+  cdp:
+    build:
+      context: .
+      dockerfile: Dockerfile.cdp
+    container_name: cib-ms-cdp
+    expose:
+      - "8080"
+    env_file:
+      - .env
+    environment:
+      SPRING_PROFILES_ACTIVE: oracle
+      SPRING_DATASOURCE_URL: ${CDP_SPRING_DATASOURCE_URL}
+      SPRING_DATASOURCE_USERNAME: ${CDP_SPRING_DATASOURCE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${CDP_SPRING_DATASOURCE_PASSWORD}
+    restart: unless-stopped
+
+  gateway:
+    image: nginx:alpine
+    container_name: facturacion-gateway
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./docker/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - facturacion
+      - cdp
+    restart: unless-stopped

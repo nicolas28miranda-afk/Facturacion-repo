@@ -1,0 +1,52 @@
+{
+  "name": "cibercom",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A web application for managing invoices.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "build:prod": "tsc && vite build --mode production",
+    "preview": "vite preview",
+    "copy-to-backend": "node -e \"require('child_process').execSync(process.platform === 'win32' ? 'powershell -ExecutionPolicy Bypass -File copy-frontend-to-backend.ps1' : 'bash copy-frontend-to-backend.sh', {stdio: 'inherit', cwd: process.cwd()})\"",
+    "build-and-copy": "npm run build:prod && npm run copy-to-backend"
+  },
+  "keywords": [
+    "react",
+    "typescript",
+    "tailwindcss",
+    "invoicing"
+  ],
+  "author": "Cibercom",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@heroicons/react": "^2.2.0",
+    "@mui/material": "^7.3.3",
+    "@types/react-color": "^3.0.13",
+    "axios": "^1.13.1",
+    "html2canvas": "^1.4.1",
+    "html2pdf.js": "^0.12.1",
+    "jspdf": "^3.0.3",
+    "lucide-react": "^0.544.0",
+    "react": "^19.1.1",
+    "react-color": "^2.19.3",
+    "react-dom": "^19.1.1",
+    "react-icons": "^5.5.0",
+    "save": "^2.9.0",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.16",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@vitejs/plugin-react": "^4.2.0",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.16",
+    "typescript": "^5.0.2",
+    "vite": "^5.0.0"
+  }
+}

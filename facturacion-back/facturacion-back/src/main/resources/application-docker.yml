@@ -1,0 +1,14 @@
+# Perfil Docker: Tomcat ya expone el WAR como /facturacion-backend (nombre del .war).
+# NO duplicar context-path aquí (evita 404 en index.html y assets).
+---
+spring:
+  config:
+    activate:
+      on-profile: docker
+
+server:
+  servlet:
+    context-path: /
+
+cors:
+  allowed-origins: http://localhost:5173,http://localhost:5174,http://127.0.0.1:5173,http://127.0.0.1:5174,http://18.222.139.153:8080,http://18.116.201.152:8080,https://redcibercom.cloud,http://redcibercom.cloud

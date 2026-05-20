@@ -36,6 +36,7 @@ Copia desde tu PC, por ejemplo:
 cd ~/FacturacionCibercom
 cp .env.example .env
 nano .env
+# Importante: SPRING_PROFILES_ACTIVE=docker,oracle (no uses solo prod en Docker)
 docker compose up -d --build
 ```
 

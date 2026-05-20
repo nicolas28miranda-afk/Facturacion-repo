@@ -9,6 +9,9 @@ services:
       - "8080"
     env_file:
       - .env
+    environment:
+      # docker = context-path / (Tomcat ya usa /facturacion-backend por el nombre del WAR)
+      SPRING_PROFILES_ACTIVE: docker,oracle
     restart: unless-stopped
 
   cdp:
@@ -21,7 +24,7 @@ services:
     env_file:
       - .env
     environment:
-      SPRING_PROFILES_ACTIVE: oracle
+      SPRING_PROFILES_ACTIVE: docker,oracle
       SPRING_DATASOURCE_URL: ${CDP_SPRING_DATASOURCE_URL}
       SPRING_DATASOURCE_USERNAME: ${CDP_SPRING_DATASOURCE_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${CDP_SPRING_DATASOURCE_PASSWORD}

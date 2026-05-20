@@ -20,12 +20,8 @@ import java.util.Map;
 public class IndexController {
 
     /**
-     * Redirige la ruta raíz al index.html del frontend
+     * La raíz (/) sirve index.html vía SpaResourceConfig (forward).
      */
-    @GetMapping
-    public RedirectView index() {
-        return new RedirectView("/index.html");
-    }
 
     /**
      * Endpoint alternativo para verificar el estado del API

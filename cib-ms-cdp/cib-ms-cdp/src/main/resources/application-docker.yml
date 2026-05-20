@@ -1,0 +1,10 @@
+# Perfil Docker: Tomcat expone el WAR como /cib-ms-cdp
+---
+spring:
+  config:
+    activate:
+      on-profile: docker
+
+server:
+  servlet:
+    context-path: /

@@ -21,6 +21,5 @@ RUN mvn clean package -DskipTests
 # --- 3) Servidor Tomcat con la app ---
 FROM tomcat:10.1-jdk17-temurin
 RUN rm -rf /usr/local/tomcat/webapps/*
-# ROOT.war: Tomcat en / y Spring usa context-path /facturacion-backend (application.yml prod)
-COPY --from=backend /app/target/facturacion-backend-*.war /usr/local/tomcat/webapps/ROOT.war
+COPY --from=backend /app/target/facturacion-backend-*.war /usr/local/tomcat/webapps/facturacion-backend.war
 EXPOSE 8080

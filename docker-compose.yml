@@ -9,6 +9,9 @@ services:
       - "8080"
     env_file:
       - .env
+    environment:
+      # El WAR ya se llama facturacion-backend.war (contexto Tomcat). Evita /facturacion-backend/facturacion-backend/
+      SERVER_SERVLET_CONTEXT_PATH: /
     restart: unless-stopped
 
   cdp:
@@ -22,6 +25,7 @@ services:
       - .env
     environment:
       SPRING_PROFILES_ACTIVE: oracle
+      SERVER_SERVLET_CONTEXT_PATH: /
       SPRING_DATASOURCE_URL: ${CDP_SPRING_DATASOURCE_URL}
       SPRING_DATASOURCE_USERNAME: ${CDP_SPRING_DATASOURCE_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${CDP_SPRING_DATASOURCE_PASSWORD}

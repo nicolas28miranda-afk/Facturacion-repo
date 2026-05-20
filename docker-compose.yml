@@ -9,9 +9,18 @@ services:
       - "8080"
     env_file:
       - .env
+    volumes:
+      # Certificados CSD (no van en Git). Copia .cer y .key aquí en el servidor.
+      - ./certificados-csd:/etc/csd:ro
     environment:
       # docker = context-path / (Tomcat ya usa /facturacion-backend por el nombre del WAR)
       SPRING_PROFILES_ACTIVE: docker,oracle
+      FACTURACION_CSD_ENABLED: ${FACTURACION_CSD_ENABLED:-true}
+      FACTURACION_CSD_CERTIFICADO_PATH: ${FACTURACION_CSD_CERTIFICADO_PATH:-/etc/csd/CSD_Sucursal_1_IVD920810GU2_20230518_062554.cer}
+      FACTURACION_CSD_LLAVE_PATH: ${FACTURACION_CSD_LLAVE_PATH:-/etc/csd/CSD_Sucursal_1_IVD920810GU2_20230518_062554.key}
+      FACTURACION_CSD_LLAVE_PASSWORD: ${FACTURACION_CSD_LLAVE_PASSWORD:-}
+      # Memoria Java (servidor mínimo recomendado: 2 GB RAM + swap). Ajusta -Xmx si tienes más RAM.
+      CATALINA_OPTS: "-Xms512m -Xmx1200m -XX:+UseG1GC -XX:+ExitOnOutOfMemoryError"
     restart: unless-stopped
 
   cdp:
@@ -25,6 +34,7 @@ services:
       - .env
     environment:
       SPRING_PROFILES_ACTIVE: docker,oracle
+      CATALINA_OPTS: "-Xms128m -Xmx384m -XX:+UseG1GC"
       SPRING_DATASOURCE_URL: ${CDP_SPRING_DATASOURCE_URL}
       SPRING_DATASOURCE_USERNAME: ${CDP_SPRING_DATASOURCE_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${CDP_SPRING_DATASOURCE_PASSWORD}

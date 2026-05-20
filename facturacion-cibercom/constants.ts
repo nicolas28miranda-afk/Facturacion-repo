@@ -14,7 +14,7 @@ import { ChevronDoubleRightIcon } from './components/icons/ChevronDoubleRightIco
 import { CogIcon } from './components/icons/CogIcon';
 import { PaintBrushIcon } from './components/icons/PaintBrushIcon';
 import { 
-  FaUser, FaStore, FaCalendarAlt, FaLaptop, FaExclamationTriangle, FaLayerGroup, 
+  FaUser, FaStore, FaExclamationTriangle,
   FaChartBar, FaFileAlt, FaUsers, FaExchangeAlt, FaClipboardCheck, FaClipboardList, FaSyncAlt, FaFileSignature, FaHistory, FaEnvelope, FaTh, FaBell, FaTasks
 } from 'react-icons/fa';
 import { FiFileText, FiUsers, FiSettings } from 'react-icons/fi';

@@ -406,7 +406,7 @@ export function pickDefaultPath(
 
 ): string {
 
-  if (isOperatorProfile(user) && allowedPaths.has('operacion')) {
+  if (isOperatorProfile(user ?? null) && allowedPaths.has('operacion')) {
 
     return 'operacion';
 

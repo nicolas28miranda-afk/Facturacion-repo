@@ -51,7 +51,6 @@ export interface EnvioPdfDirectoRequest {
 }
 
 import { apiUrl } from './api';
-import { logoService } from './logoService';
 
 class CorreoService {
   private baseUrl = apiUrl('/correo');

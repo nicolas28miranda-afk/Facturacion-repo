@@ -9,6 +9,7 @@ import { SelectField } from './SelectField';
 import { useEmpresa } from '../context/EmpresaContext';
 import { apiUrl, getHeadersWithUsuario } from '../services/api';
 import { correoService } from '../services/correoService';
+import { facturaService } from '../services/facturaService';
 import { EnviarWhatsAppModal } from './EnviarWhatsAppModal';
 import {
   WHATSAPP_MENSAJE_BASE_CARTA_PORTE,
@@ -991,59 +992,6 @@ export const FacturacionCartaPortePage: React.FC = () => {
       await facturaService.generarYDescargarXML(uuid);
     } catch (err) {
       alert(err instanceof Error ? err.message : 'Error al descargar XML');
-    }
-  };
-
-  const handleDescargarXML = async () => {
-    if (!validarFormulario()) return;
-    try {
-      const payload = {
-        versionCartaPorte: '3.1',
-        rfcIniciales: formData.rfcIniciales,
-        rfcFecha: formData.rfcFecha,
-        rfcHomoclave: formData.rfcHomoclave,
-        correoElectronico: formData.correoElectronico,
-        razonSocial: formData.razonSocial,
-        nombre: formData.nombre,
-        paterno: formData.paterno,
-        materno: formData.materno,
-        domicilioFiscal: formData.domicilioFiscal,
-        regimenFiscal: formData.regimenFiscal,
-        usoCfdi: formData.usoCfdi,
-        descripcion: formData.descripcion,
-        fechaInformacion: formData.fechaInformacion,
-        numeroSerie: formData.numeroSerie,
-        precio: formData.precio,
-        personaAutoriza: formData.personaAutoriza,
-        puesto: formData.puesto,
-        tipoTransporte: formData.tipoTransporte,
-        tipoPersona: formData.tipoPersona,
-        complemento: formData.complemento,
-      };
-
-      const response = await fetch(apiUrl('/carta-porte/preview-xml'), {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-
-      if (!response.ok) {
-        throw new Error('Error al generar XML');
-      }
-
-      const data = await response.json();
-      const blob = new Blob([data.xml], { type: 'application/xml' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `CartaPorte_${formData.numeroSerie || 'CP001'}.xml`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    } catch (err) {
-      console.error('Error descargando XML:', err);
-      alert(`Error: ${err instanceof Error ? err.message : 'Error desconocido'}`);
     }
   };
 
